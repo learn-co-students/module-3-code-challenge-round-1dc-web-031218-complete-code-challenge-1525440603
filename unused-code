@@ -1,0 +1,5 @@
+// let element = document.createElement('img')
+// element.setAttribute('src', `${imageObj.url}`);
+// imageLocation.appendChild(element)
+// element.innerHTML = `<img src=${imageObj.url}>`
+// imageLocation.innerHTML = `<img src=${imageObj.url}>`
