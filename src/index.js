@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
    response.json
 }).then(json => console.log(json));
 
-
 	//Step 4. 
 	for(comment in commentsUL){
 		// make an LI
