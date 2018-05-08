@@ -1,58 +1,46 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const imageId = 5 //Enter your assigned imageId here
-  const imageURL = `https://randopic.herokuapp.com/images/${imageId}`
-  const likeURL = `https://randopic.herokuapp.com/likes/`
-  const commentsURL = `https://randopic.herokuapp.com/comments/`
+const imageId = 5; //Enter your assigned imageId here
+const imageURL = `https://randopic.herokuapp.com/images/${imageId}`;
+const likeURL = `https://randopic.herokuapp.com/likes/`;
+const commentsURL = `https://randopic.herokuapp.com/comments/`;
 
-})
+document.addEventListener("DOMContentLoaded", function() {
+  //image has many comments and likes, comments belong to an image, likes belong to an image,
+  let store = { images: [], comments: [], likes: [] };
+  let likes = store.likes.length;
 
+  fetch(imageURL)
+    .then(response => response.json())
+    .then(responseJson => {
+      let imagevariable = document.getElementById("image");
+      imagevariable.src = responseJson.url;
+      responseJson.comments.forEach(comment => {
+        let commentItem = document.createElement("li");
+        document.getElementById("comments").appendChild(commentItem);
+        commentItem.innerHTML = comment.content;
+      });
+    });
 
-//image has many comments and likes, comments belong to an image, likes belong to an image,
-let store = {images: [],  comments: [], likes: []}
-let likes = store.likes.length
+  const commentForm = document.getElementById("comment_form");
 
-      fetch(`https://randopic.herokuapp.com/images/5`)
-        .then(response => response.json())
-        .then(responseJson =>
-          responseJson.forEach(
-            pic =>
-              new Image(pic.name, pic.like_count, pic.comments)
-          )
-        );
+  commentForm.addEventListener("submit", event => {
+    event.preventDefault();
+    debugger;
+    const commentInput = document.getElementById("comment_input");
+    const userComment = document.createElement("li");
+    newComment = new Comment(event.target[0].value);
+    document.getElementById("comments").appendChild(userComment);
+    userComment.innerHTML = commentInput.value;
+    newComment.save();
+  });
 
-        fetch(`https://randopic.herokuapp.com/comments/`)
-          .then(response => response.json())
-          .then(response =>
-            response.forEach(
-              comment =>
-                new Comment(comment.content)
-            )
-          );
+  const likey = document.getElementById("like_button");
 
-
-      const commentForm = document.getElementById('comment_form')
-
-      commentForm.addEventListener('submit', event => {
-        event.preventDefault()
-        const commentInput = document.getElementById('comment_input')
-        const userComment= document.createElement('li')
-        document.getElementById('comments').appendChild(userComment)
-        userComment.innerHTML = commentInput.value
-       });
-
-
-const likey = document.getElementById('like_button')
-
-likey.addEventListener('click', event  => {
-++likes
-const totallikes = document.getElementById('likes')
-totallikes.innerHTML = likes
-
-
-})
-
-
-
+  likey.addEventListener("click", event => {
+    ++likes;
+    const totallikes = document.getElementById("likes");
+    totallikes.innerHTML = likes;
+  });
+});
 // const sampleData =
 // {
 //   "id": 1,
